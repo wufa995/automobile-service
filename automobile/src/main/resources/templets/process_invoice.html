@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 单据</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+	<link href="http://localhost:8080/ams/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="http://localhost:8080/ams/css/animate.css" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content p-xl">
+                    <div class="row">
+                        <div class="col-sm-6">
+
+							<address>
+                                <strong th:text="|预约人：${process.userName}|">预约人：用户名</strong><br>
+                                <strong th:text="|维修地址：${process.address}|">预约地址</strong><br>
+                                <strong th:text="|电话：${process.tel}|">电话</strong><br>
+                                <strong th:text="|车牌号：${process.carNum}|">车牌号</strong><br>
+                                <strong th:text="|驾驶证号：${process.driverNum}|">驾驶证号</strong><br>
+                                <strong th:text="|预约时间：${#dates.format(schedule.startDate, 'yyyy-MM-dd HH:mm')} ～ ${#dates.format(schedule.endDate, 'HH:mm')}|">预约时间</strong><br>
+                                <strong th:text="|维修负责人：${updater.userName}|">维修负责人</strong><br>
+                                <strong th:text="|负责人电话：${updater.tel}|">负责人电话</strong><br>
+                            </address>
+                        </div>
+						
+
+                        <div class="col-sm-6 text-right">
+                            <address>
+                                <strong>长春XX汽车维修有限公司</strong><br>
+                                长春市南关区吉林建筑大学<br>
+                                <abbr title="Phone">联系电话：</abbr> (+86 10) 6666 8888
+                            </address>
+                            <h4 class="text-navy" th:text="|单据编号：${process.id}|">H+-000567F7-00</h4>
+                            <p>
+                                <span><strong>预定日期：</strong> <span th:text="${#dates.format(process.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive m-t">
+                        <table class="table invoice-table">
+                            <thead>
+                                <tr>
+                                    <th>维修项目</th>
+									<th>预计用时（小时）</th>
+									<th>维修费（元）</th>
+									<th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div><strong>网上预约</strong>
+                                        </div>
+                                    </td>
+                                    <td>0</td>
+                                    <td>&yen;20.00</td>
+                                    <td>网上预约费用</td>
+                                </tr>
+								<tr th:each="repair:${repairList}">
+                                    <td>
+                                        <div><strong th:text="*{repair.name}">预约费用</strong>
+                                        </div>
+                                    </td>
+                                    <td th:text="*{repair.useHour}">0</td>
+                                    <td th:text="|&yen;*{repair.money}|">&yen;20.00</td>
+                                    <td th:text="*{repair.description}">网上预约费用</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /table-responsive -->
+
+                    <table class="table invoice-total">
+                        <tbody>
+                            <tr>
+                                <td><strong>总价：</strong>
+                                </td>
+                                <td th:text="|&yen;${process.allCost}|">1026.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right" th:if="${session.user != null && session.user.role == 'updater' && process.type != 3}">
+                        <input id="processId" type="hidden" th:value="${process.id}"/>
+                        <button id="done" class="btn btn-primary"><i class="fa fa-dollar"></i>完成订单</button>
+                    </div>
+                    <div class="text-right" th:if="${process.type == 3}">
+                        <h3 class="btn btn-primary"><i class="fa fa-dollar"></i>订单已完成</h3>
+                    </div>
+                    <div th:if="${process.type != 3 || (session.user != null && session.user.role == 'admin')}">
+                        <form action="/ams/processs/invoice/update" method="post">
+                            <input name="id" type="hidden" th:value="${process.id}"/>
+                            情况描述：<textarea name="content" style="width: 60%" th:if="${session.user != null && session.user.role != 'user'}" th:text="${process.content}"></textarea>
+                            总维修费：<input name="allCost" type="text" th:value="${process.allCost}" th:if="${session.user != null && session.user.role != 'user'}"/>
+                            <input type="submit" th:value="修改" th:if="${session.user != null && session.user.role != 'user'}"/>
+                        </form>
+                    </div>
+                    <div class="well m-t" th:text="${process.content}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="http://localhost:8080/ams/js/jquery.min.js?v=2.1.4"></script>
+    <script src="http://localhost:8080/ams/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- 自定义js -->
+    <script src="http://localhost:8080/ams/js/content.js?v=1.0.0"></script>
+
+
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <!--统计代码，可删除-->
+    <script>
+        $("#done").click(function () {
+            var id = $("#processId").val();
+            location.href = "/ams/processs/done/" + id;
+        });
+    </script>
+</body>
+
+</html>

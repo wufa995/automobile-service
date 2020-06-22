@@ -1,0 +1,38 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.17.RELEASE'
+    }
+    repositories {
+        // 阿里仓库地址
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+allprojects {
+    repositories {
+        // 阿里仓库地址
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+    }
+}
+
+subprojects {
+    //apply plugin: 'war'
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+
+    group 'automobile-service'
+    version '1.0-SNAPSHOT'
+    sourceCompatibility = 1.8
+
+    dependencies {
+
+    }
+}

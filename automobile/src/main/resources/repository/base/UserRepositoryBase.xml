@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.wufa995.automobile.repository.UserRepository" >
+
+    <resultMap id="BaseResultMap" type="cn.wufa995.automobile.entity.User" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+        <result column="level" property="level" jdbcType="INTEGER" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="role" property="role" jdbcType="VARCHAR" />
+        <result column="tel" property="tel" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `create_date`,`email`,`id`,`is_delete`,`level`,`password`,`role`,`tel`,`user_name`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from `s_user`
+        where `id` = #{id,jdbcType=VARCHAR}
+    </delete>
+
+
+    <insert id="insert" parameterType="cn.wufa995.automobile.entity.User" >
+        insert into `s_user` (`create_date`,`email`,`id`,`is_delete`,`level`,`password`,`role`,`tel`,`user_name`)
+        values (#{createDate,jdbcType=TIMESTAMP},#{email,jdbcType=VARCHAR},#{id,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},#{level,jdbcType=INTEGER},#{password,jdbcType=VARCHAR},#{role,jdbcType=VARCHAR},#{tel,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="cn.wufa995.automobile.entity.User" >
+        insert into `s_user`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="createDate != null" >
+                `create_date`,
+            </if>
+            <if test="email != null" >
+                `email`,
+            </if>
+            <if test="id != null" >
+                `id`,
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                `is_delete`,
+            </if>
+            <if test="level != null or level == 0" >
+                `level`,
+            </if>
+            <if test="password != null" >
+                `password`,
+            </if>
+            <if test="role != null" >
+                `role`,
+            </if>
+            <if test="tel != null" >
+                `tel`,
+            </if>
+            <if test="userName != null" >
+                `user_name`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="level != null or level == 0" >
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null" >
+                #{role,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.wufa995.automobile.entity.User" >
+        update `s_user`
+        <set >
+            <if test="createDate != null" >
+                `create_date` = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null" >
+                `email` = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                `is_delete` = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="level != null or level == 0" >
+                `level` = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="password != null" >
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null" >
+                `role` = #{role,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                `tel` = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                `user_name` = #{userName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="cn.wufa995.automobile.entity.User" >
+        update `s_user` set
+        `create_date` = #{createDate,jdbcType=TIMESTAMP},
+        `email` = #{email,jdbcType=VARCHAR},
+        `is_delete` = #{isDelete,jdbcType=INTEGER},
+        `level` = #{level,jdbcType=INTEGER},
+        `password` = #{password,jdbcType=VARCHAR},
+        `role` = #{role,jdbcType=VARCHAR},
+        `tel` = #{tel,jdbcType=VARCHAR},
+        `user_name` = #{userName,jdbcType=VARCHAR}
+        where `id` = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_user`
+        where `id` = #{id,jdbcType=VARCHAR}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="createDate != null" >
+                and `create_date` = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="email != null" >
+                and `email` = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="id != null" >
+                and `id` = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                and `is_delete` = #{isDelete,jdbcType=INTEGER}
+            </if>
+            <if test="level != null or level == 0" >
+                and `level` = #{level,jdbcType=INTEGER}
+            </if>
+            <if test="password != null" >
+                and `password` = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="role != null" >
+                and `role` = #{role,jdbcType=VARCHAR}
+            </if>
+            <if test="tel != null" >
+                and `tel` = #{tel,jdbcType=VARCHAR}
+            </if>
+            <if test="userName != null" >
+                and `user_name` = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "createDate" and likes[k] != null'>
+                        and `create_date` like concat('%', #{likes.createDate,jdbcType=TIMESTAMP}, '%')
+                    </if>
+                    <if test='k == "email" and likes[k] != null'>
+                        and `email` like concat('%', #{likes.email,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "id" and likes[k] != null'>
+                        and `id` like concat('%', #{likes.id,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "isDelete" and likes[k] != null'>
+                        and `is_delete` like concat('%', #{likes.isDelete,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "level" and likes[k] != null'>
+                        and `level` like concat('%', #{likes.level,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "password" and likes[k] != null'>
+                        and `password` like concat('%', #{likes.password,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "role" and likes[k] != null'>
+                        and `role` like concat('%', #{likes.role,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "tel" and likes[k] != null'>
+                        and `tel` like concat('%', #{likes.tel,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "userName" and likes[k] != null'>
+                        and `user_name` like concat('%', #{likes.userName,jdbcType=VARCHAR}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="createDate != null" >
+                and `create_date` like concat('%', #{createDate,jdbcType=TIMESTAMP}, '%')
+            </if>
+            <if test="email != null" >
+                and `email` like concat('%', #{email,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="id != null" >
+                and `id` like concat('%', #{id,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                and `is_delete` like concat('%', #{isDelete,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="level != null or level == 0" >
+                and `level` like concat('%', #{level,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="password != null" >
+                and `password` like concat('%', #{password,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="role != null" >
+                and `role` like concat('%', #{role,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="tel != null" >
+                and `tel` like concat('%', #{tel,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="userName != null" >
+                and `user_name` like concat('%', #{userName,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "createDate"'>
+                    `create_date`
+                </if>
+                <if test='k == "email"'>
+                    `email`
+                </if>
+                <if test='k == "id"'>
+                    `id`
+                </if>
+                <if test='k == "isDelete"'>
+                    `is_delete`
+                </if>
+                <if test='k == "level"'>
+                    `level`
+                </if>
+                <if test='k == "password"'>
+                    `password`
+                </if>
+                <if test='k == "role"'>
+                    `role`
+                </if>
+                <if test='k == "tel"'>
+                    `tel`
+                </if>
+                <if test='k == "userName"'>
+                    `user_name`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="cn.wufa995.automobile.entity.User" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_user`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="cn.wufa995.automobile.entity.User" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_user`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="cn.wufa995.automobile.entity.User" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_user`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="cn.wufa995.automobile.entity.User" resultType="java.lang.Integer" >
+        select count(1)
+        from `s_user`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="cn.wufa995.automobile.entity.User" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_user`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="cn.wufa995.automobile.entity.User" resultType="java.lang.Integer" >
+        select count(1)
+        from `s_user`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>

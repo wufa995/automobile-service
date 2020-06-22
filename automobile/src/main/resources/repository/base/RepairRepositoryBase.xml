@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.wufa995.automobile.repository.RepairRepository" >
+
+    <resultMap id="BaseResultMap" type="cn.wufa995.automobile.entity.Repair" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+        <result column="is_use" property="isUse" jdbcType="INTEGER" />
+        <result column="money" property="money" jdbcType="DECIMAL" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="use_hour" property="useHour" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="DateTypeResultMap" type="cn.wufa995.automobile.entity.Repair" extends="BaseResultMap">
+        <result column="create_date" property="createDateStr" typeHandler="cn.wufa995.automobile.handler.DateTypeHandler" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="findAllTest" resultMap="DateTypeResultMap">
+        select * from s_repair
+    </select>
+
+
+    <sql id="Base_Column_List" >
+        `create_date`,`description`,`id`,`is_delete`,`is_use`,`money`,`name`,`use_hour`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from `s_repair`
+        where `id` = #{id,jdbcType=VARCHAR}
+    </delete>
+
+
+    <insert id="insert" parameterType="cn.wufa995.automobile.entity.Repair" >
+        insert into `s_repair` (`create_date`,`description`,`id`,`is_delete`,`is_use`,`money`,`name`,`use_hour`)
+        values (#{createDate,jdbcType=TIMESTAMP},#{description,jdbcType=VARCHAR},#{id,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},#{isUse,jdbcType=INTEGER},#{money,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{useHour,jdbcType=INTEGER})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="cn.wufa995.automobile.entity.Repair" >
+        insert into `s_repair`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="createDate != null" >
+                `create_date`,
+            </if>
+            <if test="description != null" >
+                `description`,
+            </if>
+            <if test="id != null" >
+                `id`,
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                `is_delete`,
+            </if>
+            <if test="isUse != null or isUse == 0" >
+                `is_use`,
+            </if>
+            <if test="money != null" >
+                `money`,
+            </if>
+            <if test="name != null" >
+                `name`,
+            </if>
+            <if test="useHour != null or useHour == 0" >
+                `use_hour`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null" >
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="isUse != null or isUse == 0" >
+                #{isUse,jdbcType=INTEGER},
+            </if>
+            <if test="money != null" >
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="useHour != null or useHour == 0" >
+                #{useHour,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.wufa995.automobile.entity.Repair" >
+        update `s_repair`
+        <set >
+            <if test="createDate != null" >
+                `create_date` = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null" >
+                `description` = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                `is_delete` = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="isUse != null or isUse == 0" >
+                `is_use` = #{isUse,jdbcType=INTEGER},
+            </if>
+            <if test="money != null" >
+                `money` = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="name != null" >
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="useHour != null or useHour == 0" >
+                `use_hour` = #{useHour,jdbcType=INTEGER},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="cn.wufa995.automobile.entity.Repair" >
+        update `s_repair` set
+        `create_date` = #{createDate,jdbcType=TIMESTAMP},
+        `description` = #{description,jdbcType=VARCHAR},
+        `is_delete` = #{isDelete,jdbcType=INTEGER},
+        `is_use` = #{isUse,jdbcType=INTEGER},
+        `money` = #{money,jdbcType=DECIMAL},
+        `name` = #{name,jdbcType=VARCHAR},
+        `use_hour` = #{useHour,jdbcType=INTEGER}
+        where `id` = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_repair`
+        where `id` = #{id,jdbcType=VARCHAR}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="createDate != null" >
+                and `create_date` = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="description != null" >
+                and `description` = #{description,jdbcType=VARCHAR}
+            </if>
+            <if test="id != null" >
+                and `id` = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                and `is_delete` = #{isDelete,jdbcType=INTEGER}
+            </if>
+            <if test="isUse != null or isUse == 0" >
+                and `is_use` = #{isUse,jdbcType=INTEGER}
+            </if>
+            <if test="money != null" >
+                and `money` = #{money,jdbcType=DECIMAL}
+            </if>
+            <if test="name != null" >
+                and `name` = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="useHour != null or useHour == 0" >
+                and `use_hour` = #{useHour,jdbcType=INTEGER}
+            </if>
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "createDate" and likes[k] != null'>
+                        and `create_date` like concat('%', #{likes.createDate,jdbcType=TIMESTAMP}, '%')
+                    </if>
+                    <if test='k == "description" and likes[k] != null'>
+                        and `description` like concat('%', #{likes.description,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "id" and likes[k] != null'>
+                        and `id` like concat('%', #{likes.id,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "isDelete" and likes[k] != null'>
+                        and `is_delete` like concat('%', #{likes.isDelete,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "isUse" and likes[k] != null'>
+                        and `is_use` like concat('%', #{likes.isUse,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "money" and likes[k] != null'>
+                        and `money` like concat('%', #{likes.money,jdbcType=DECIMAL}, '%')
+                    </if>
+                    <if test='k == "name" and likes[k] != null'>
+                        and `name` like concat('%', #{likes.name,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "useHour" and likes[k] != null'>
+                        and `use_hour` like concat('%', #{likes.useHour,jdbcType=INTEGER}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="createDate != null" >
+                and `create_date` like concat('%', #{createDate,jdbcType=TIMESTAMP}, '%')
+            </if>
+            <if test="description != null" >
+                and `description` like concat('%', #{description,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="id != null" >
+                and `id` like concat('%', #{id,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                and `is_delete` like concat('%', #{isDelete,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="isUse != null or isUse == 0" >
+                and `is_use` like concat('%', #{isUse,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="money != null" >
+                and `money` like concat('%', #{money,jdbcType=DECIMAL}, '%')
+            </if>
+            <if test="name != null" >
+                and `name` like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="useHour != null or useHour == 0" >
+                and `use_hour` like concat('%', #{useHour,jdbcType=INTEGER}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "createDate"'>
+                    `create_date`
+                </if>
+                <if test='k == "description"'>
+                    `description`
+                </if>
+                <if test='k == "id"'>
+                    `id`
+                </if>
+                <if test='k == "isDelete"'>
+                    `is_delete`
+                </if>
+                <if test='k == "isUse"'>
+                    `is_use`
+                </if>
+                <if test='k == "money"'>
+                    `money`
+                </if>
+                <if test='k == "name"'>
+                    `name`
+                </if>
+                <if test='k == "useHour"'>
+                    `use_hour`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="cn.wufa995.automobile.entity.Repair" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_repair`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="cn.wufa995.automobile.entity.Repair" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_repair`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="cn.wufa995.automobile.entity.Repair" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_repair`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="cn.wufa995.automobile.entity.Repair" resultType="java.lang.Integer" >
+        select count(1)
+        from `s_repair`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="cn.wufa995.automobile.entity.Repair" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_repair`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="cn.wufa995.automobile.entity.Repair" resultType="java.lang.Integer" >
+        select count(1)
+        from `s_repair`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 首页示例四</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="http://localhost:8080/ams/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/animate.css" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg top-navigation">
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+            <div class="wrapper wrapper-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2" th:if="${session.user != null && session.user.role == 'admin'}">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span class="label label-success pull-right">总计</span>
+                                    <h5>用户数</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <h1 class="no-margins" th:text="${userNum}">386,200</h1>
+                                    <div class="stat-percent font-bold text-success" th:text="${updaterNum}">98%</i>
+                                    </div>
+                                    <small>维修师数量</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2" th:if="${session.user != null && session.user.role == 'admin'}">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span class="label label-info pull-right">总计</span>
+                                    <h5>预约中</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <h1 class="no-margins" th:text="${processNum}">80,800</h1>
+                                    <div class="stat-percent font-bold text-info" th:text="${doneNum}">20%</i>
+                                    </div>
+                                    <small>订单完成数量</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" th:if="${session.user != null && session.user.role == 'admin'}">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span class="label label-primary pull-right"></span>
+                                    <h5>收入情况</h5>
+                                </div>
+                                <div class="ibox-content">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h1 class="no-margins" th:text="|&yen; ${oldMonthMoney}|">406,420</h1>
+                                            <div class="font-bold text-navy"><small>上月总收入</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h1 class="no-margins" th:text="|&yen; ${nowMonthMoney}|">206,120</h1>
+                                            <div class="font-bold text-navy"><small>本月总收入</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" th:if="${session.user != null && session.user.role == 'admin'}">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>本月收入总览</h5>
+                                    <input id="monthCost" type="hidden" th:value="${monthCostList}"/>
+                                    <div class="ibox-tools">
+                                        <span class="label label-primary">本月</span>
+                                    </div>
+                                </div>
+                                <div class="ibox-content no-padding">
+                                    <div class="flot-chart m-t-lg" style="height: 55px;">
+                                        <div class="flot-chart-content" id="flot-chart1"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content">
+                                    <div>
+                                        <span class="pull-right text-right">
+                                        <small>长春市南关区吉林建筑大学<strong></strong></small>
+                                            <br/>
+                                            客服电话：： (+86 10) 6666 8888
+                                        </span>
+                                        <h3 class="font-bold no-margins">长春XX汽车维修有限公司</h3>
+                                        <small>支持的维修项目如下：</small>
+                                    </div>
+
+                                    <div class="m-t-sm">
+
+                                        <div class="row">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>项目名</th>
+                                                            <th>预计用时（小时）</th>
+                                                            <th>修理费（元）</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr th:each="repair:${page.data}" th:title="${repair.description}">
+                                                            <td th:text="*{repair.name}"></td>
+                                                            <td th:text="*{repair.useHour}"></td>
+                                                            <td th:text="*{repair.money}"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>今日值班</h5>
+                                </div>
+                                <div class="ibox-content" th:each="schedule:${schedules}" th:if="${schedule.updater != '无'}">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <h4 th:text="${#dates.format(schedule.startDate, 'HH:mm')}" >436 547.20</h4>
+                                        </div>
+
+                                        <div class="col-xs-4">
+                                            <h4 th:text="${#dates.format(schedule.endDate, 'HH:mm')}" >436 547.20</h4>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <h4 th:text="${schedule.updater}" >436 547.20</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- 全局js -->
+    <script src="http://localhost:8080/ams/js/jquery.min.js?v=2.1.4"></script>
+    <script src="http://localhost:8080/ams/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- 自定义js -->
+    <script src="http://localhost:8080/ams/js/content.js?v=1.0.0"></script>
+
+
+    <!-- Flot -->
+    <script src="http://localhost:8080/ams/js/plugins/flot/jquery.flot.js"></script>
+    <script src="http://localhost:8080/ams/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="http://localhost:8080/ams/js/plugins/flot/jquery.flot.resize.js"></script>
+
+    <!-- ChartJS-->
+    <script src="http://localhost:8080/ams/js/plugins/chartJs/Chart.min.js"></script>
+
+    <!-- Peity -->
+    <script src="http://localhost:8080/ams/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- Peity demo -->
+    <script src="http://localhost:8080/ams/js/demo/peity-demo.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+
+            var monthCost = $("#monthCost").val();
+            var d1 = $.parseJSON(monthCost);
+            var data1 = [
+                {
+                    label: "数据1",
+                    data: d1,
+                    color: '#17a084'
+                }
+            ];
+            $.plot($("#flot-chart1"), data1, {
+                xaxis: {
+                    tickDecimals: 0
+                },
+                series: {
+                    lines: {
+                        show: true,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 1
+                            }, {
+                                opacity: 1
+                            }]
+                        },
+                    },
+                    points: {
+                        width: 0.1,
+                        show: false
+                    },
+                },
+                grid: {
+                    show: false,
+                    borderWidth: 0
+                },
+                legend: {
+                    show: false,
+                }
+            });
+
+            var lineData = {
+                labels: ["一月", "二月", "三月", "四月", "五月", "六月", "七月"],
+                datasets: [
+                    {
+                        label: "示例数据",
+                        fillColor: "rgba(220,220,220,0.5)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [65, 59, 40, 51, 36, 25, 40]
+                    },
+                    {
+                        label: "示例数据",
+                        fillColor: "rgba(26,179,148,0.5)",
+                        strokeColor: "rgba(26,179,148,0.7)",
+                        pointColor: "rgba(26,179,148,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(26,179,148,1)",
+                        data: [48, 48, 60, 39, 56, 37, 30]
+                    }
+                ]
+            };
+
+            var lineOptions = {
+                scaleShowGridLines: true,
+                scaleGridLineColor: "rgba(0,0,0,.05)",
+                scaleGridLineWidth: 1,
+                bezierCurve: true,
+                bezierCurveTension: 0.4,
+                pointDot: true,
+                pointDotRadius: 4,
+                pointDotStrokeWidth: 1,
+                pointHitDetectionRadius: 20,
+                datasetStroke: true,
+                datasetStrokeWidth: 2,
+                datasetFill: true,
+                responsive: true,
+            };
+
+
+            var ctx = document.getElementById("lineChart").getContext("2d");
+            var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
+
+        });
+    </script>
+
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <!--统计代码，可删除-->
+
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+rootProject.name = 'automobile-service'
+include 'automobile'
+include 'starter'
+

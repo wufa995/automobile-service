@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 表单向导</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="http://localhost:8080/ams/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/animate.css" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>预约汽车维修</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a id="repeat">
+                                <i class="fa fa-repeat"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <h2>
+							填写预约信息
+						</h2>
+                        <form id="form" action="/ams/processs/apply" method="post" class="wizard-big">
+                            <h1>基础信息</h1>
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="form-group" >
+                                            <label>维修地点</label>
+                                            <select name="address" class="form-control required">
+												<option th:each="item:${address}" th:value="*{item}" th:text="*{item}">地点</option>
+											</select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>选择时间</label>
+											<input id="selectDate" class="form-control required"
+                                                   th:value="${#dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd 09:00:00')}"
+                                                   placeholder="YYYY-MM-DD hh:mm:ss">
+                                        </div>
+										<div class="form-group">
+                                            <label id="repair">预约维修师（点此处刷新维修师）</label>
+											<select id="updater" name="scheduleId" class="form-control required">
+											</select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="text-center">
+                                            <div style="margin-top: 20px">
+                                                <i class="fa fa-sign-in" style="font-size: 180px;color: #e5e5e5 "></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <h1>个人资料</h1>
+                            <fieldset>
+                                <h2>个人资料信息</h2>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>姓名</label>
+                                            <input name="userId" th:if="${session.user != null}" type="hidden" class="form-control required" th:value="${session.user.id}">
+                                            <input name="userName" th:if="${session.user != null && session.user.role != 'admin'}" type="text" class="form-control required" th:value="${session.user.userName}" disabled="disabled">
+                                            <input name="userName" th:if="${session.user != null && session.user.role != 'admin'}" type="hidden" class="form-control required" th:value="${session.user.userName}">
+                                            <input name="userName" th:if="${session.user != null && session.user.role == 'admin'}" type="text" class="form-control required"/>
+                                            <input name="userName" th:if="${session.user == null}" type="text" class="form-control required"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>手机号</label>
+                                            <input name="tel" th:if="${session.user != null && session.user.role != 'admin'}" type="text" class="form-control required" th:value="${session.user.tel}" disabled="disabled">
+                                            <input name="tel" th:if="${session.user != null && session.user.role != 'admin'}" type="hidden" class="form-control required" th:value="${session.user.tel}">
+                                            <input name="tel" th:if="${session.user != null && session.user.role == 'admin'}" type="text" class="form-control required"/>
+                                            <input name="tel" th:if="${session.user == null}" type="text" class="form-control required"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>邮箱</label>
+                                            <input name="email" th:if="${session.user != null && session.user.role != 'admin'}" type="text" class="form-control required" th:value="${session.user.email}" disabled="disabled">
+                                            <input name="email" th:if="${session.user != null && session.user.role != 'admin'}" type="hidden" class="form-control required" th:value="${session.user.email}">
+                                            <input name="email" th:if="${session.user != null && session.user.role == 'admin'}" type="text" class="form-control required"/>
+                                            <input name="email" th:if="${session.user == null}" type="text" class="form-control required"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>车牌号</label>
+                                            <input name="carNum" type="text" class="form-control required">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>驾驶证号</label>
+                                            <input name="driverNum" type="text" class="form-control required">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <h1>维修项目</h1>
+                            <fieldset>
+                                <h2>选择维修项目</h2>
+                                <table class="table table-hover" data-show-columns="true" data-height="800" data-mobile-responsive="true">
+                                    <thead id="tableParent">
+                                    <tr th:each="page:${repair_page_list}">
+                                        <td style="" th:each="repair:${page.data}">
+                                            <input name="repairs" type="checkbox" th:value="${repair.id}" required="required"/>
+                                            <input name="" type="hidden" th:value="${repair.money}"/>
+                                            <span th:text="|${repair.name}(&yen;${repair.money})|" th:title="${repair.description}"></span>
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </fieldset>
+
+                            <h1>完成</h1>
+                            <fieldset>
+                                <h2>确认预定</h2>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="form-group" >
+                                            <label>预定费</label>
+                                            <input name="" class="form-control required" type="text" th:value="20" disabled="disabled">
+                                            <input name="" class="form-control required" type="hidden" th:value="20">
+                                        </div>
+                                        <div class="form-group" >
+                                            <label>预计总花费</label>
+                                            <input id="cost" name="allCost" class="form-control required" type="text" th:value="20" disabled="disabled">
+                                            <input id="allCost" name="allCost" class="form-control required" type="hidden" th:value="20">
+                                        </div>
+                                    </div>
+                                </div>
+                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
+                                <label for="acceptTerms">确认预定</label>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="http://localhost:8080/ams/js/jquery.min.js?v=2.1.4"></script>
+    <script src="http://localhost:8080/ams/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- 自定义js -->
+    <script src="http://localhost:8080/ams/js/content.js?v=1.0.0"></script>
+
+
+    <!-- Steps -->
+    <script src="http://localhost:8080/ams/js/plugins/staps/jquery.steps.min.js"></script>
+	<script src="http://localhost:8080/ams/js/plugins/layer/laydate/laydate.js"></script>
+	<script src="http://localhost:8080/ams/js/plugins/layer/layer.min.js"></script>
+    
+
+    <!-- Jquery Validate -->
+    <script src="http://localhost:8080/ams/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="http://localhost:8080/ams/js/plugins/validate/messages_zh.min.js"></script>
+	
+    <script>
+        $(document).ready(function () {
+            $("#wizard").steps();
+            $("#form").steps({
+                bodyTag: "fieldset",
+                onStepChanging: function (event, currentIndex, newIndex) {
+                    // Always allow going backward even if the current step contains invalid fields!
+                    if (currentIndex > newIndex) {
+                        return true;
+                    }
+
+                    // Forbid suppressing "Warning" step if the user is to young
+                    if (newIndex === 3 && Number($("#age").val()) < 18) {
+                        return false;
+                    }
+
+                    var form = $(this);
+
+                    // Clean up if user went backward before
+                    if (currentIndex < newIndex) {
+                        // To remove error styles
+                        $(".body:eq(" + newIndex + ") label.error", form).remove();
+                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                    }
+
+                    // Disable validation on fields that are disabled or hidden.
+                    form.validate().settings.ignore = ":disabled,:hidden";
+
+                    // Start validation; Prevent going forward if false
+                    return form.valid();
+                },
+                onStepChanged: function (event, currentIndex, priorIndex) {
+                    // Suppress (skip) "Warning" step if the user is old enough.
+                    if (currentIndex === 2 && Number($("#age").val()) >= 18) {
+                        $(this).steps("next");
+                    }
+
+                    // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
+                    if (currentIndex === 2 && priorIndex === 3) {
+                        $(this).steps("previous");
+                    }
+                },
+                onFinishing: function (event, currentIndex) {
+                    var form = $(this);
+
+                    // Disable validation on fields that are disabled.
+                    // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+                    form.validate().settings.ignore = ":disabled";
+
+                    // Start validation; Prevent form submission if false
+                    return form.valid();
+                },
+                onFinished: function (event, currentIndex) {
+                    var form = $(this);
+
+                    // Submit form input
+                    form.submit();
+                }
+            }).validate({
+                errorPlacement: function (error, element) {
+                    element.before(error);
+                },
+                rules: {
+                    confirm: {
+                        equalTo: "#password"
+                    }
+                }
+            });
+            $.ajax({
+                url : "/ams/schedules/query/" + $("#selectDate").val(),
+                type : "POST",
+                success : function(result) {
+                    $("#updater").html("");
+                    var data = result.data;
+                    for (var i in data) {
+                        var option = "<option value='" + data[i].id
+                            + "'>" + data[i].updater + "</option>";
+                        $("#updater").append(option);
+                    }
+                }
+            });
+            $("#selectDate").change(function(){
+                var queryDate = $(this).val();
+				setTimeout(function(){
+					$.ajax({
+                        url : "/ams/schedules/query/" + queryDate,
+                        type : "POST",
+                        success : function(result) {
+                            $("#updater").html("");
+                            var data = result.data;
+                            var index = 0;
+                            for (var i in data) {
+                                var option = "<option value='" + data[i].id
+                                    + "'>" + data[i].updater + "</option>";
+                                $("#updater").append(option);
+                                index = 1;
+                            }
+                            if(index === 0) {
+                                layer("预约时间应在早8:00至12:00,13:00至18:00!");
+                            }
+                        }
+                    });
+                }, 1000);
+			});
+            $("#selectDate").click(function(){
+                laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'});
+            });
+            $("#repair").click(function() {
+                var queryDate = $("#selectDate").val();
+                $.ajax({
+                    url: "/ams/schedules/query/" + queryDate,
+                    type: "POST",
+                    success: function (result) {
+                        $("#updater").html("");
+                        var data = result.data;
+                        var index = 0;
+                        for (var i in data) {
+                            var option = "<option value='" + data[i].id
+                                + "'>" + data[i].updater + "</option>";
+                            $("#updater").append(option);
+                            index = 1;
+                        }
+                        if (index === 0) {
+                            layer("预约时间应在早8:00至12:00,13:00至18:00!");
+                        }
+                    }
+                });
+            });
+            $("input[name='repairs']").click(function(){
+                var allCost = parseFloat($("#allCost").val());
+                if($(this).prop('checked') == true) {
+                    allCost = allCost + parseFloat($(this).next().val());
+                } else {
+                    allCost = allCost - parseFloat($(this).next().val());
+                }
+                $("#cost").val(allCost);
+                $("#allCost").val(allCost);
+            });
+        });
+    </script>
+
+    <!--统计代码，可删除-->
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+</body>
+
+</html>

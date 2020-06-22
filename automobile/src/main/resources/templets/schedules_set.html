@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - Bootstrap Table</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+	<link href="http://localhost:8080/ams/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/animate.css" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/style.css?v=4.1.0" rel="stylesheet">
+    
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>值班设置</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a id="repeat">
+                        <i class="fa fa-repeat"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-6">
+                        <!-- Example Large Columns -->
+                        <div class="example-wrap">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">时间：</label>
+                                <div class="col-sm-10">
+                                    <input id="queryDate" class="laydate-icon form-control layer-date" th:value="${queryDate}"/>
+                                </div>
+                            </div>
+                            <div class="example">
+                                <table class="table table-hover" data-show-columns="true" data-height="800" data-mobile-responsive="true">
+									<thead id="tableParent">
+										<tr>
+											<th style="" data-field="字段0" tabindex="0">
+												<div class="th-inner ">开始时间</div>
+												<div class="fht-cell" style="width: 50px;"></div>
+											</th>
+											<th style="" data-field="字段1" tabindex="0">
+												<div class="th-inner ">结束时间</div>
+												<div class="fht-cell" style="width: 50px;"></div>
+											</th>
+											<th style="" data-field="字段1" tabindex="0" th:each="scheduleVO:${scheduleVOList}">
+												<div class="th-inner " th:text="|*{scheduleVO.commonVO.key} *{scheduleVO.commonVO.value}|">日期</div>
+												<div class="fht-cell" style="width: 50px;"></div>
+											</th>
+										</tr>
+										<tr th:each="scheduleVO,index:${scheduleVOList}">
+											<td style="">
+                                                <input style="width: 70px" class="form-control layer-date" placeholder="HH:mm" th:if="${scheduleVO.startDateList.get(__*{index.index}__) != null}" th:value="${#dates.format(scheduleVO.startDateList.get(__*{index.index}__), 'HH:mm')}">
+                                                <input style="width: 70px" class="form-control layer-date" placeholder="hh:mm" th:if="${scheduleVO.startDateList.get(__*{index.index}__) == null}">
+                                            </td>
+                                            <td style="">
+                                                <input style="width: 70px" class="form-control layer-date" placeholder="hh:mm" th:if="${scheduleVO.endDateList.get(__*{index.index}__) != null}" th:value="${#dates.format(scheduleVO.endDateList.get(__*{index.index}__), 'HH:mm')}">
+                                                <input style="width: 70px" class="form-control layer-date" placeholder="hh:mm" th:if="${scheduleVO.endDateList.get(__*{index.index}__) == null}">
+                                            </td>
+											<td style="" th:each="scheduleVOItem:${scheduleVOList}">
+                                                <select class="" >
+                                                    <option></option>
+                                                    <option value="无" th:selected="${scheduleVOItem.scheduleList.get(__*{index.index}__).updater == '无'}">无</option>
+                                                    <option th:selected="${updater.id == scheduleVOItem.scheduleList.get(__*{index.index}__).updater}"
+                                                            th:value="*{updater.id}" th:each="updater:${updater}" th:text="|Lv.*{updater.level} *{updater.userName}|">维修师</option>
+                                                </select>
+                                            </td>
+										</tr>
+									</thead>
+								</table>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button id="save" class="btn btn-primary" type="submit">保存内容</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Example Large Columns -->
+                    </div>
+
+                    <div class="clearfix hidden-xs"></div>
+                </div>
+            </div>
+        </div>
+        <!-- End Panel Columns & Select -->
+    </div>
+
+    <!-- 全局js -->
+    <script src="http://localhost:8080/ams/js/jquery.min.js?v=2.1.4"></script>
+    <script src="http://localhost:8080/ams/js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="http://localhost:8080/ams/js/content.js?v=1.0.0"></script>
+
+
+    <!-- Bootstrap table -->
+    <script src="http://localhost:8080/ams/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="http://localhost:8080/ams/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="http://localhost:8080/ams/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+    <!-- Peity -->
+    <script src="http://localhost:8080/ams/js/demo/bootstrap-table-demo.js"></script>
+    <script src="http://localhost:8080/ams/js/plugins/layer/layer.min.js"></script>
+    <script src="http://localhost:8080/ams/js/plugins/layer/laydate/laydate.js"></script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <!--统计代码，可删除-->
+    <script>
+        //外部js调用
+        laydate({
+            elem: '#queryDate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+        });
+
+        //日期范围限制
+        var start = {
+            elem: '#start',
+            format: 'YYYY/MM/DD hh:mm:ss',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-06-16 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end = {
+            elem: '#end',
+            format: 'YYYY/MM/DD hh:mm:ss',
+            min: laydate.now(),
+            max: '2099-06-16 23:59:59',
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(start);
+        laydate(end);
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#save').click(function(){
+                layer.confirm('确定要保存吗？', {
+                    btn: ['保存','取消'] //按钮
+                }, function(){
+                    var day = new Array();
+                    var queryDate = $("#queryDate").val();
+                    var schedule = function(startDate, endDate, updater, date){
+                        this.startDate = Date.parse(new Date(date + " " + startDate + ":00"));
+                        this.endDate = Date.parse(new Date(date + " " + endDate + ":00"));
+                        this.updater = updater;
+                    };
+                    var scheduleList = [];
+                    var index = 0;
+                    $('#tableParent').find("tr").each(function(i,val){
+                        if(i === 0) {
+                            $(val).children().each(function(ii,vall){
+                                day[ii] = $(vall).children().eq(0).html();
+                            });
+                            return;
+                        }
+                        var startDate = $(val).children().eq(0).children().val();
+                        var endDate = $(val).children().eq(1).children().val();
+                        if(startDate != null && endDate != null && startDate !== '' && endDate !== '') {
+                            $(val).children().each(function(ii,vall){
+                                if(ii === 0 || ii === 1) {
+                                    return;
+                                }
+                                var date = queryDate.substring(0, queryDate.indexOf('-')) + "-" + day[ii].substring(0, day[ii].indexOf(' '));
+                                var updater = $(vall).children().val();
+                                if(updater != null && updater !== '') {
+                                    scheduleList[index] = new schedule(startDate, endDate, updater, date);
+                                    index++;
+                                }
+                            })
+                        }
+                    });
+                    // console.log(scheduleList);
+                    $.ajax({
+                        url : "/ams/schedules/set/" + queryDate,
+                        type : "POST",
+                        data : JSON.stringify(scheduleList), //转JSON字符串
+                        dataType : 'json',
+                        contentType : 'application/json;charset=UTF-8', //contentType很重要
+                        success : function() {
+                            location.href = "/ams/schedules/set?queryDate=" + queryDate;
+                        }
+                    });
+                }, function(){
+                });
+            });
+
+            $('#queryDate').blur(function(){
+                setTimeout(function(){
+                    location.href = "/ams/schedules/set?queryDate=" + $('#queryDate').val();
+                }, 2500);
+            });
+
+            $("#repeat").click(function(){
+                location.href = "/ams/schedules/set?queryDate=" + $('#queryDate').val();
+            });
+        });
+    </script>
+</body>
+</html>

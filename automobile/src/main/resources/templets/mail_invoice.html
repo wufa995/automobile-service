@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 单据</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content p-xl">
+					<div style="word-wrap:break-word;">
+						<h3 th:text="|${process.userName}您好：您的汽车维修订单如下：|">提示语</h3>
+						<h3 style="color: #19aa8d" th:text="|编号：${process.id}|">提示语</h3>
+					</div>
+
+                    <div class="table-responsive m-t">
+                        <table border="1" width="500" cellpadding="10" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>维修项目</th>
+									<th>预计用时（小时）</th>
+									<th>维修费（元）</th>
+									<th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div><strong>网上预约</strong>
+                                        </div>
+                                    </td>
+                                    <td>0</td>
+                                    <td>&yen;20.00</td>
+                                    <td>网上预约费用</td>
+                                </tr>
+								<tr th:if="${repairList != null && repairList.size() != 0}" th:each="repair:${repairList}">
+                                    <td>
+                                        <div><strong th:text="*{repair.name}">预约费用</strong>
+                                        </div>
+                                    </td>
+                                    <td th:text="*{repair.useHour}">0</td>
+                                    <td th:text="|&yen;*{repair.money}|">&yen;20.00</td>
+                                    <td th:text="*{repair.description}">网上预约费用</td>
+                                </tr>
+								<tr>
+									<td><strong>总价：</strong></td>
+									<td th:text="|&yen;${process.allCost}|" colspan="3">1026.00</td>
+								</tr>
+                                <!--<tr>-->
+                                    <!--<td><strong>其它：</strong></td>-->
+                                    <!--<td th:text="${process.content}" colspan="3">1026.00</td>-->
+                                <!--</tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                    <a th:href="|http://localhost:8080/ams/processs/invoice/${process.id}|"><i class="fa fa-dollar"></i>查看工单详情</a>
+
+                    <!--<div class="well m-t" th:if="${session.user == null}"><strong>注意：</strong> 请在3日内完成付款，否则订单会自动取消。-->
+                    <!--</div>-->
+					<hr/>
+					<div class="col-sm-6 text-right">
+                        <address>
+                            <strong>长春XX汽车维修有限公司</strong><br>
+                                长春市南关区吉林建筑大学<br>
+                            <abbr title="Phone">联系电话：</abbr> (+86 10) 6666 8888
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+
+</body>
+
+</html>

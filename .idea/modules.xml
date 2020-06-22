@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/automobile.iml" filepath="$PROJECT_DIR$/.idea/modules/automobile.iml" group="automobile" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/automobile-service.iml" filepath="$PROJECT_DIR$/.idea/automobile-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/automobile/automobile_main.iml" filepath="$PROJECT_DIR$/.idea/modules/automobile/automobile_main.iml" group="automobile" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/automobile/automobile_test.iml" filepath="$PROJECT_DIR$/.idea/modules/automobile/automobile_test.iml" group="automobile" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/starter.iml" filepath="$PROJECT_DIR$/.idea/modules/starter.iml" group="starter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/starter/starter_main.iml" filepath="$PROJECT_DIR$/.idea/modules/starter/starter_main.iml" group="starter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/starter/starter_test.iml" filepath="$PROJECT_DIR$/.idea/modules/starter/starter_test.iml" group="starter" />
+    </modules>
+  </component>
+</project>

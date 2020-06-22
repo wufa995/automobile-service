@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.wufa995.automobile.repository.ScheduleRepository" >
+
+    <resultMap id="BaseResultMap" type="cn.wufa995.automobile.entity.Schedule" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="apply_num" property="applyNum" jdbcType="INTEGER" />
+        <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+        <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+        <result column="updater" property="updater" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `apply_num`,`end_date`,`id`,`is_delete`,`start_date`,`updater`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from `s_schedule`
+        where `id` = #{id,jdbcType=VARCHAR}
+    </delete>
+
+
+    <insert id="insert" parameterType="cn.wufa995.automobile.entity.Schedule" >
+        insert into `s_schedule` (`apply_num`,`end_date`,`id`,`is_delete`,`start_date`,`updater`)
+        values (#{applyNum,jdbcType=INTEGER},#{endDate,jdbcType=TIMESTAMP},#{id,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},#{startDate,jdbcType=TIMESTAMP},#{updater,jdbcType=VARCHAR})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="cn.wufa995.automobile.entity.Schedule" >
+        insert into `s_schedule`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="applyNum != null or applyNum == 0" >
+                `apply_num`,
+            </if>
+            <if test="endDate != null" >
+                `end_date`,
+            </if>
+            <if test="id != null" >
+                `id`,
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                `is_delete`,
+            </if>
+            <if test="startDate != null" >
+                `start_date`,
+            </if>
+            <if test="updater != null" >
+                `updater`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="applyNum != null or applyNum == 0" >
+                #{applyNum,jdbcType=INTEGER},
+            </if>
+            <if test="endDate != null" >
+                #{endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="startDate != null" >
+                #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updater != null" >
+                #{updater,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.wufa995.automobile.entity.Schedule" >
+        update `s_schedule`
+        <set >
+            <if test="applyNum != null or applyNum == 0" >
+                `apply_num` = #{applyNum,jdbcType=INTEGER},
+            </if>
+            <if test="endDate != null" >
+                `end_date` = #{endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                `is_delete` = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="startDate != null" >
+                `start_date` = #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updater != null" >
+                `updater` = #{updater,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="cn.wufa995.automobile.entity.Schedule" >
+        update `s_schedule` set
+        `apply_num` = #{applyNum,jdbcType=INTEGER},
+        `end_date` = #{endDate,jdbcType=TIMESTAMP},
+        `is_delete` = #{isDelete,jdbcType=INTEGER},
+        `start_date` = #{startDate,jdbcType=TIMESTAMP},
+        `updater` = #{updater,jdbcType=VARCHAR}
+        where `id` = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_schedule`
+        where `id` = #{id,jdbcType=VARCHAR}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="applyNum != null or applyNum == 0" >
+                and `apply_num` = #{applyNum,jdbcType=INTEGER}
+            </if>
+            <if test="endDate != null" >
+                and `end_date` = #{endDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="id != null" >
+                and `id` = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                and `is_delete` = #{isDelete,jdbcType=INTEGER}
+            </if>
+            <if test="startDate != null" >
+                and `start_date` = #{startDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updater != null" >
+                and `updater` = #{updater,jdbcType=VARCHAR}
+            </if>
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "applyNum" and likes[k] != null'>
+                        and `apply_num` like concat('%', #{likes.applyNum,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "endDate" and likes[k] != null'>
+                        and `end_date` like concat('%', #{likes.endDate,jdbcType=TIMESTAMP}, '%')
+                    </if>
+                    <if test='k == "id" and likes[k] != null'>
+                        and `id` like concat('%', #{likes.id,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "isDelete" and likes[k] != null'>
+                        and `is_delete` like concat('%', #{likes.isDelete,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "startDate" and likes[k] != null'>
+                        and `start_date` like concat('%', #{likes.startDate,jdbcType=TIMESTAMP}, '%')
+                    </if>
+                    <if test='k == "updater" and likes[k] != null'>
+                        and `updater` like concat('%', #{likes.updater,jdbcType=VARCHAR}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="applyNum != null or applyNum == 0" >
+                and `apply_num` like concat('%', #{applyNum,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="endDate != null" >
+                and `end_date` like concat('%', #{endDate,jdbcType=TIMESTAMP}, '%')
+            </if>
+            <if test="id != null" >
+                and `id` like concat('%', #{id,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="isDelete != null or isDelete == 0" >
+                and `is_delete` like concat('%', #{isDelete,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="startDate != null" >
+                and `start_date` like concat('%', #{startDate,jdbcType=TIMESTAMP}, '%')
+            </if>
+            <if test="updater != null" >
+                and `updater` like concat('%', #{updater,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "applyNum"'>
+                    `apply_num`
+                </if>
+                <if test='k == "endDate"'>
+                    `end_date`
+                </if>
+                <if test='k == "id"'>
+                    `id`
+                </if>
+                <if test='k == "isDelete"'>
+                    `is_delete`
+                </if>
+                <if test='k == "startDate"'>
+                    `start_date`
+                </if>
+                <if test='k == "updater"'>
+                    `updater`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="cn.wufa995.automobile.entity.Schedule" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_schedule`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="cn.wufa995.automobile.entity.Schedule" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_schedule`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="cn.wufa995.automobile.entity.Schedule" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_schedule`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="cn.wufa995.automobile.entity.Schedule" resultType="java.lang.Integer" >
+        select count(1)
+        from `s_schedule`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="cn.wufa995.automobile.entity.Schedule" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `s_schedule`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="cn.wufa995.automobile.entity.Schedule" resultType="java.lang.Integer" >
+        select count(1)
+        from `s_schedule`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>

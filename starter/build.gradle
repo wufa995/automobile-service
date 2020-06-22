@@ -1,0 +1,55 @@
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // spring-boot-web 相关的依赖
+    compile('org.springframework.boot:spring-boot-starter-web')
+    // spring-boot-test 测试相关的依赖
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    // 一款API文档相关的框架、后端可用来测试接口
+    compile 'com.spring4all:swagger-spring-boot-starter:1.8.0.RELEASE'
+    // 简化实体类开发的工具、包含Slf日志框架
+    compile('org.projectlombok:lombok')
+    // 使用mybatis框架需要的依赖
+    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0'
+    // mysql的连接驱动
+    compile 'mysql:mysql-connector-java'
+    // 支持web mvc
+    compileOnly "org.springframework:spring-webmvc"
+    // 支持servlet
+    compileOnly "javax.servlet:javax.servlet-api"
+    // tomcat相关的依赖
+    compile("org.springframework.boot:spring-boot-starter-tomcat")
+    // 支持JSP的依赖
+    compile ("org.apache.tomcat.embed:tomcat-embed-jasper")
+    // 支持jstl的依赖
+    compile("jstl:jstl:1.2")
+    // 导入配置文件处理器，配置文件进行绑定就会有提示
+    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '1.5.17.RELEASE'
+    // 自动配置的依赖
+    compileOnly "org.springframework.boot:spring-boot-autoconfigure"
+    // SpringBoot 项目健康检查与监控
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.5.17.RELEASE'
+    // 模板引擎Thymeleaf
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.1.3.RELEASE'
+    // 拼音工具包
+    compile ('com.belerweb:pinyin4j:2.5.0')
+    // free marker
+    compile ("org.springframework.boot:spring-boot-starter-freemarker")
+    // 模板引擎Thymeleaf不检查HTML
+    compile 'net.sourceforge.nekohtml:nekohtml:1.9.22'
+    // 热部署相关
+    compile 'org.springframework.boot:spring-boot-devtools:1.3.0.RELEASE'
+    // 发送邮件相关
+    compile('org.springframework.boot:spring-boot-starter-mail')
+    // 邮件相关
+    compile group: 'javax.mail', name: 'mail', version: '1.4.1'
+    // 爬虫相关
+    compile 'org.jsoup:jsoup:1.7.3'
+    // POI相关
+    // compile group: 'org.apache.poi', name: 'poi', version: '3.17'
+    // POI - XSSF补充
+    // compile 'org.apache.poi:poi-ooxml:3.9'
+    // POI相关
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.1'
+
+
+}

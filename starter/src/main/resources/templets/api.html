@@ -1,0 +1,226 @@
+<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="webjars/springfox-swagger-ui/springfox.css?v=2.9.2">
+    <link rel="stylesheet" type="text/css" href="webjars/springfox-swagger-ui/swagger-ui.css?v=2.9.2">
+    <link rel="icon" type="image/png" href="webjars/springfox-swagger-ui/favicon-32x32.png?v=2.9.2" sizes="32x32">
+    <link rel="icon" type="image/png" href="webjars/springfox-swagger-ui/favicon-16x16.png?v=2.9.2" sizes="16x16">
+    <style>
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+
+        a{text-decoration:none}
+    </style>
+</head>
+
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     style="position:absolute;width:0;height:0">
+</svg>
+
+<div id="swagger-ui">
+    <section data-reactroot="" class="swagger-ui swagger-container">
+        <div class="topbar">
+            <div class="wrapper">
+                <div class="topbar-wrapper">
+                    <a class="link"><img height="30" width="30" src="/ams/img/logo.png" alt="Swagger UI">
+                        <span style="width: 300px" th:text="|${api.projectName}-接口文档|"></span>
+                        <input id="count" type="hidden" th:value="${api.count}"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="swagger-ui">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     style="position: absolute; width: 0px; height: 0px;">
+                </svg>
+            </div>
+            <div><!-- react-empty: 40 -->
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="wrapper">
+                    <section style="float:right;width:35%" class="block col-12 block-desktop col-12-desktop">
+                        <div>
+                            <span>
+                              <div class="opblock-tag-section is-open">
+                                <h4 class="opblock-tag" id="operations-tag-audit-events-mvc-endpoint">
+                                    <span>接口详情</span>
+                                    <span>·</span>
+                                    <span id="run">调用</span>
+                                    <span>·</span>
+                                    <span id="save">保存</span>
+                                  <small>
+                                    <div class="markdown"></div></small>
+                                  <div></div>
+                                  <button class="expand-operation" title="Collapse operation">
+                                    <use href="#large-arrow-down" xlink:href="#large-arrow-down"></use>
+
+                                  </button>
+                                </h4>
+                                <div style="width:100%;height: auto; border: none; margin: 0px; padding: 0px;">
+                                  <!-- react-text: 242 -->
+                                    <!-- /react-text -->
+                                  <span>
+                                    <div th:class="|opblock opblock-${api.detail.method}|">
+                                        <input id="saveId" style="width:100%" type="hidden" th:value="${api.detail.id}"/>
+                                        <input id="method" style="width:100%" type="hidden" th:value="${api.detail.method}"/>
+                                        <input id="token" style="width:100%" type="text" th:value="TOKEN"/>
+                                        <input id="url" style="width:100%" type="text" th:value="${api.detail.url}"/>
+                                        <textarea id="params" rows="3" cols="10" th:text="${api.detail.params}"></textarea>
+                                        <textarea id="result" rows="3" cols="10" th:text="${api.detail.result}"></textarea>
+                                    </div>
+                                  </span>
+                                </div>
+                              </div>
+                            </span>
+                        </div>
+                    </section>
+                    <section style="width:65%" class="block col-12 block-desktop col-12-desktop">
+                        <div>
+                            <span>
+                              <div class="opblock-tag-section is-open">
+                                <h4 class="opblock-tag">
+                                    <span th:text="联调接口，どうぞ！"></span>
+                                  <small>
+                                    <div class="markdown"></div></small>
+                                  <div></div>
+                                  <button class="expand-operation" title="Collapse operation">
+                                    <use href="#large-arrow-down" xlink:href="#large-arrow-down"></use>
+                                      </svg>
+                                  </button>
+                                </h4>
+                              </div>
+                            </span>
+                        </div>
+                    </section>
+                    <section id="srollSection" style="width:65%;height:80%;overflow:auto" class="block col-12 block-desktop col-12-desktop">
+                        <div>
+                            <span>
+                              <div class="opblock-tag-section is-open">
+                                <div style="width:95%;height: auto; border: none; margin: 0px; padding: 0px;">
+                                  <!-- react-text: 242 -->
+                                    <!-- /react-text -->
+                                  <span th:each="data,index:${api.data}" th:id="${data.id}">
+                                        <div name="detail" th:class="|opblock opblock-${data.method}|">
+                                            <input type="hidden" th:value="${data.id}">
+                                              <div th:class="|opblock-summary opblock-summary-${data.method}|">
+                                                  <input name="finish" type="checkbox" style="zoom:200%" th:value="${data.id}" th:checked="${data.isFinish == 1}">
+                                                <span class="opblock-summary-method" th:text="${data.method}">请求类型</span>
+                                                <span class="opblock-summary-path">
+                                                    <span class="url" th:text="${data.url}">/路径</span>
+                                                </span>
+                                                <div class="opblock-summary-description" th:text="${data.describe}">描述</div></div>
+                                              <noscript></noscript>
+                                            </div>
+                                  </span>
+                                </div>
+                              </div>
+                            </span>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- 全局js -->
+<script src="http://localhost:8080/ams/js/jquery.min.js?v=2.1.4"></script>
+
+<script>
+    $(function(){
+
+
+        $("input[name='finish']:checked").each(function(){
+            $(this).parent().parent().prop("class", $(this).parent().parent().prop("class") + "-finish");
+        });
+
+        $("input[name='finish']").click(function(){
+            var isFinish = $(this).prop("checked") === true ? 1 : 0;
+            var methodId = $(this).val();
+            var scroll = $("#srollSection").scrollTop();
+            location.href = "/ams/finish?id=" + methodId + "&isFinish=" + isFinish + "&scroll=" + scroll;
+        });
+
+        $("div[name='detail']").click(function(){
+            var methodId = $(this).children("input:first-child").val();
+            var scroll = $("#srollSection").scrollTop();
+            location.href = "/ams/api?methodId=" + methodId + "&scroll=" + scroll;
+        });
+
+        $("#run").click(function() {
+            var token = $("#token").val();
+            var url = $("#url").val();
+            var params = $("#params").val();
+            var method = $("#method").val();
+            if(method.toLowerCase() === "get") {
+                url = url + params;
+                params = "";
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: params,
+                success: function (result) {
+                    $("#result").val(JSON.stringify(result));
+                }
+            });
+        });
+
+        $("#save").click(function() {
+            var id = $("#saveId").val();
+            var url = $("#url").val();
+            var params = $("#params").val();
+            var result = $("#result").val();
+            var data = {
+                id : id,
+                url : url,
+                params : params,
+                result : result
+            }
+            $.ajax({
+                url: "/ams/save",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        });
+    })
+
+    function getUrlParam(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg); //匹配目标参数
+        if (r!=null) return unescape(r[2]); return null; //返回参数值
+    }
+
+    setTimeout(function (){
+        var scroll = getUrlParam('scroll');
+        if(scroll != null) {
+            $("#srollSection").scrollTop(scroll);
+        }
+    }, 60);
+</script>
+</body>
+</html>

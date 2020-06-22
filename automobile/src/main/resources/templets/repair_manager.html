@@ -1,0 +1,218 @@
+ <!DOCTYPE html>
+ <html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 基础表格</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="http://localhost:8080/ams/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/animate.css" rel="stylesheet">
+    <link href="http://localhost:8080/ams/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>用户管理</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a id="repeat">
+                                <i class="fa fa-repeat"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input id="query" type="text" placeholder="根据维修项目查询" class="input-sm form-control"
+                                           th:value="${query}"/>
+                                        <span class="input-group-btn">
+                                            <button id="queryBtn" type="button" class="btn btn-sm btn-primary"> 搜索</button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>项目名</th>
+                                        <th>创建时间</th>
+                                        <th>用时（小时）</th>
+                                        <th>修理费（元）</th>
+                                        <th>状态</th>
+                                        <th>描述</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="repair:${page.data}">
+                                        <td th:text="*{repair.name}"></td>
+                                        <td th:text="${#dates.format(repair.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="*{repair.useHour}"></td>
+                                        <td th:text="*{repair.money}"></td>
+                                        <td th:if="${repair.isUse == 0}">未使用</td>
+                                        <td th:if="${repair.isUse == 1}">使用中</td>
+                                        <td th:text="*{repair.description}"></td>
+                                        <td>
+                                            <a th:href="|/ams/repairs/update/*{repair.id}|"><i class="fa fa-edit text-navy"></i>修改</a>
+                                            <a name="isUseBtn">
+                                                <input name="userId" type="hidden" th:value="*{repair.id}"/>
+                                                <i class="fa fa-edit text-navy"></i>
+                                                更改状态
+                                            </a>
+                                            <a name="delBtn">
+                                                <input name="userId" type="hidden" th:value="*{repair.id}"/>
+                                                <i class="fa fa-cut text-navy"></i>
+                                                删除
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="dataTables_info" id="editable_info" role="alert" aria-live="polite" aria-relevant="all"
+                                     th:text="|当前第${page.pageNo}页，共${page.totalPage}页|">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="dataTables_paginate paging_simple_numbers" id="editable_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button" aria-controls="editable" tabindex="0">
+                                            <a href="/ams/repairs/manager?pageNo=1&pageSize=10">1</a>
+                                        </li>
+                                        <li class="paginate_button " aria-controls="editable" tabindex="0">
+                                            <a href="/ams/repairs/manager?pageNo=2&pageSize=10">2</a>
+                                        </li>
+                                        <li class="paginate_button " aria-controls="editable" tabindex="0">
+                                            <a href="/ams/repairs/manager?pageNo=3&pageSize=10">3</a>
+                                        </li>
+                                        <li class="paginate_button " aria-controls="editable" tabindex="0">
+                                            <a href="/ams/repairs/manager?pageNo=4&pageSize=10">4</a>
+                                        </li>
+                                        <li class="paginate_button " aria-controls="editable" tabindex="0">
+                                            <a href="/ams/repairs/manager?pageNo=5&pageSize=10">5</a>
+                                        </li>
+                                        <li class="paginate_button " aria-controls="editable" tabindex="0">
+                                            <a href="/ams/repairs/manager?pageNo=6&pageSize=10">6</a>
+                                        </li>
+                                        <li class="paginate_button " aria-controls="editable" tabindex="0">
+                                            <a href="/ams/repairs/manager?pageNo=7&pageSize=10">7</a>
+                                        </li>
+                                        <li class="paginate_button " aria-controls="editable" tabindex="0">
+                                            <a href="/ams/repairs/manager?pageNo=8&pageSize=10">8</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="http://localhost:8080/ams/js/jquery.min.js?v=2.1.4"></script>
+    <script src="http://localhost:8080/ams/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- Peity -->
+    <script src="http://localhost:8080/ams/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="http://localhost:8080/ams/js/content.js?v=1.0.0"></script>
+
+
+    <!-- iCheck -->
+    <script src="http://localhost:8080/ams/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Peity -->
+    <script src="http://localhost:8080/ams/js/demo/peity-demo.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+            $('#queryBtn').click(function(){
+                var name = $('#query').val();
+                if(name == null) {
+                    name = "";
+                }
+                location.href = "/ams/repairs/manager?pageNo=1&pageSize=10&queryName=" + name;
+            });
+            $("a[name='delBtn']").click(function(){
+                var userId = $(this).children().eq(0).val();
+                var name = $('#query').val();
+                if(name == null) {
+                    name = "";
+                }
+                layer.confirm('确定要删除吗？', {
+                    btn: ['删除','取消'] //按钮
+                }, function(){
+                    $.ajax({
+                        url : "/ams/repairs/delete/" + userId,
+                        type : "POST",
+                        success : function() {
+                            location.href = "/ams/repairs/manager?pageNo=1&pageSize=10&queryName=" + name;
+                        }
+                    });
+                }, function(){
+                });
+            });
+            $("a[name='isUseBtn']").click(function(){
+                var userId = $(this).children().eq(0).val();
+                var name = $('#query').val();
+                if(name == null) {
+                    name = "";
+                }
+                $.ajax({
+                    url : "/ams/repairs/update/type/" + userId,
+                    type : "POST",
+                    success : function() {
+                        location.href = "/ams/repairs/manager?pageNo=1&pageSize=10&queryName=" + name;
+                    }
+                });
+            });
+
+            $("#repeat").click(function(){
+                var name = $('#query').val();
+                if(name == null) {
+                    name = "";
+                }
+                location.href = "/ams/repairs/manager?pageNo=1&pageSize=10&queryName=" + name;
+            });
+        });
+    </script>
+    <!-- layer javascript -->
+    <script src="http://localhost:8080/ams/js/plugins/layer/layer.min.js"></script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <!--统计代码，可删除-->
+
+</body>
+
+</html>
